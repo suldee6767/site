@@ -1,0 +1,6 @@
+{
+  "name": "Хувийн танилцуулга & Бүтээлүүд",
+  "description": "Хувийн танилцуулга веб хуудас болон миний хийсэн бүтээлүүд, төслүүдийн жагсаалт.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
