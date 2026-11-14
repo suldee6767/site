@@ -1,0 +1,153 @@
+{
+  "questions": [
+    {
+      "emoji": "🍥🍜🦊",
+      "image": "/src/assets/images/real/anime_naruto.jpg",
+      "answer": "Naruto",
+      "options": ["Naruto", "Bleach", "One Piece", "Death Note"]
+    },
+    {
+      "emoji": "⚔️👒🏴☠️",
+      "image": "/src/assets/images/real/anime_one_piece.jpg",
+      "answer": "One Piece",
+      "options": ["One Piece", "Naruto", "Bleach", "Fairy Tail"]
+    },
+    {
+      "emoji": "📓💀🍎",
+      "image": "/src/assets/images/real/anime_death_note.jpg",
+      "answer": "Death Note",
+      "options": ["Death Note", "Tokyo Ghoul", "Monster", "Bleach"]
+    },
+    {
+      "emoji": "⚔️🦋🌸",
+      "image": "/src/assets/images/real/anime_demon_slayer.jpg",
+      "answer": "Demon Slayer",
+      "options": ["Demon Slayer", "Jujutsu Kaisen", "Bleach", "Inuyasha"]
+    },
+    {
+      "emoji": "👊💥👨🦲",
+      "image": "/src/assets/images/real/anime_one_punch_man.jpg",
+      "answer": "One Punch Man",
+      "options": ["One Punch Man", "Dragon Ball", "My Hero Academia", "Mob Psycho 100"]
+    },
+    {
+      "emoji": "🧑🎓⚡🦸",
+      "image": "/src/assets/images/real/anime_my_hero_academia.jpg",
+      "answer": "My Hero Academia",
+      "options": ["My Hero Academia", "One Punch Man", "Naruto", "Black Clover"]
+    },
+    {
+      "emoji": "👹🩸🧑🎓",
+      "image": "/src/assets/images/real/anime_jujutsu_kaisen.jpg",
+      "answer": "Jujutsu Kaisen",
+      "options": ["Jujutsu Kaisen", "Demon Slayer", "Bleach", "Chainsaw Man"]
+    },
+    {
+      "emoji": "🐉🔥🐲",
+      "image": "/src/assets/images/real/anime_dragon_ball_z.jpg",
+      "answer": "Dragon Ball Z",
+      "options": ["Dragon Ball Z", "Fairy Tail", "One Piece", "Naruto"]
+    },
+    {
+      "emoji": "⚽👟🔥",
+      "image": "/src/assets/images/real/anime_blue_lock.jpg",
+      "answer": "Blue Lock",
+      "options": ["Blue Lock", "Haikyuu!!", "Slam Dunk", "Kuroko's Basketball"]
+    },
+    {
+      "emoji": "🏐🧡🐦",
+      "image": "/src/assets/images/real/anime_haikyuu.jpg",
+      "answer": "Haikyuu!!",
+      "options": ["Haikyuu!!", "Blue Lock", "Slam Dunk", "Free!"]
+    },
+    {
+      "emoji": "🧟♂️🪚🩸",
+      "image": "/src/assets/images/real/anime_chainsaw_man.jpg",
+      "answer": "Chainsaw Man",
+      "options": ["Chainsaw Man", "Tokyo Ghoul", "Demon Slayer", "Parasyte"]
+    },
+    {
+      "emoji": "👻📺📼",
+      "image": "/src/assets/images/real/anime_another.jpg",
+      "answer": "Another",
+      "options": ["Another", "Death Note", "Erased", "Higurashi"]
+    },
+    {
+      "emoji": "🧪⚗️🪨",
+      "image": "/src/assets/images/real/anime_dr_stone.jpg",
+      "answer": "Dr. Stone",
+      "options": ["Dr. Stone", "Fullmetal Alchemist", "Steins;Gate", "Cells at Work!"]
+    },
+    {
+      "emoji": "🧑🔬⏳📱",
+      "image": "/src/assets/images/real/anime_steins_gate.jpg",
+      "answer": "Steins;Gate",
+      "options": ["Steins;Gate", "Dr. Stone", "Erased", "Psycho-Pass"]
+    },
+    {
+      "emoji": "👨🍳🍳🍱",
+      "image": "/src/assets/images/real/anime_food_wars.jpg",
+      "answer": "Food Wars!",
+      "options": ["Food Wars!", "Toriko", "Yakitate!! Japan", "Sweetness & Lightning"]
+    },
+    {
+      "emoji": "🧛♂️🩸🌙",
+      "image": "/src/assets/images/real/anime_hellsing.jpg",
+      "answer": "Hellsing",
+      "options": ["Hellsing", "Tokyo Ghoul", "Vampire Knight", "Castlevania"]
+    },
+    {
+      "emoji": "🏴☠️⚓🌊",
+      "image": "/src/assets/images/real/anime_one_piece.jpg",
+      "answer": "One Piece",
+      "options": ["One Piece", "Fairy Tail", "Black Clover", "Magi"]
+    },
+    {
+      "emoji": "🧹🧙♀️🐈⬛",
+      "image": "/src/assets/images/real/anime_kiki.jpg",
+      "answer": "Kiki's Delivery Service",
+      "options": ["Kiki's Delivery Service", "Spirited Away", "Howl's Moving Castle", "Ponyo"]
+    },
+    {
+      "emoji": "🌳👦🌀",
+      "image": "/src/assets/images/real/anime_mob_psycho_100.jpg",
+      "answer": "Mob Psycho 100",
+      "options": ["Mob Psycho 100", "One Punch Man", "Naruto", "Blue Exorcist"]
+    },
+    {
+      "emoji": "🧑🏫🔫🎓",
+      "image": "/src/assets/images/real/anime_assassination_classroom.jpg",
+      "answer": "Assassination Classroom",
+      "options": ["Assassination Classroom", "Classroom of the Elite", "Great Teacher Onizuka", "Spy x Family"]
+    },
+    {
+      "emoji": "🕵️♂️👨👩👧👦🐶",
+      "image": "/src/assets/images/real/anime_spy_x_family.jpg",
+      "answer": "Spy x Family",
+      "options": ["Spy x Family", "Buddy Daddies", "Detective Conan", "The Millionaire Detective"]
+    }
+  ],
+  "characters": [
+    {
+      "name": "Luffy",
+      "anime": "One Piece",
+      "image": "/src/assets/images/real/char_luffy.jpg",
+      "answer": "Luffy",
+      "options": ["Luffy", "Zoro", "Naruto", "Natsu"]
+    },
+    {
+      "name": "Naruto",
+      "anime": "Naruto",
+      "image": "/src/assets/images/real/char_naruto.jpg",
+      "answer": "Naruto",
+      "options": ["Naruto", "Sasuke", "Ichigo", "Goku"]
+    },
+    {
+      "name": "Goku",
+      "anime": "Dragon Ball Z",
+      "image": "/src/assets/images/real/char_goku.jpg",
+      "answer": "Goku",
+      "options": ["Goku", "Vegeta", "Saitama", "Luffy"]
+    }
+  ]
+}

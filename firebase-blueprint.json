@@ -1,0 +1,184 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Хэрэглэгчийн хувийн тохиргоо болон профайл мэдээлэл",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth хэрэглэгчийн давтагдашгүй ID",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Хэрэглэгчийн харагдах нэр",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "netlifySubdomain": {
+          "type": "string",
+          "description": "Портфолиод хадгалсан Netlify дэд домэйн",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Үүсгэсэн серверийн цаг"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Шинэчилсэн серверийн цаг"
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "netlifySubdomain",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GameScore": {
+      "title": "GameScore",
+      "description": "Anime Guess тоглоомын төгсгөлийн оноо болон тэргүүлэгчдийн самбарын бичлэг",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Тоглогчийн Firebase Auth UID",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "playerName": {
+          "type": "string",
+          "description": "Самбар дээр харагдах тоглогчийн нэр",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "mode": {
+          "type": "string",
+          "description": "Тоглоомын горим",
+          "enum": ["emoji", "anime", "character"]
+        },
+        "difficulty": {
+          "type": "string",
+          "description": "Хүндрэлийн түвшин",
+          "enum": ["normal", "hard", "god"]
+        },
+        "score": {
+          "type": "integer",
+          "description": "Авсан нийт оноо"
+        },
+        "correctCount": {
+          "type": "integer",
+          "description": "Зөв таасан асуултын тоо"
+        },
+        "totalQuestions": {
+          "type": "integer",
+          "description": "Нийт асуултын тоо"
+        },
+        "peakSpeed": {
+          "type": "number",
+          "description": "Хүрсэн хамгийн их цагийн хурд"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "Нийтийн тэргүүлэгчдийн самбарт харуулах эсэх"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Хадгалсан серверийн цаг"
+        }
+      },
+      "required": [
+        "userId",
+        "playerName",
+        "mode",
+        "difficulty",
+        "score",
+        "correctCount",
+        "totalQuestions",
+        "peakSpeed",
+        "isPublic",
+        "createdAt"
+      ]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "Портфолио сайтын холбоо барих хэсгээс илгээсэн зурвас",
+      "type": "object",
+      "properties": {
+        "senderUid": {
+          "type": "string",
+          "description": "Зурвас илгээгчийн Firebase Auth UID",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "senderName": {
+          "type": "string",
+          "description": "Илгээгчийн нэр",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "senderEmail": {
+          "type": "string",
+          "description": "Илгээгчийн имэйл хаяг",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "message": {
+          "type": "string",
+          "description": "Зурвасын агуулга",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "status": {
+          "type": "string",
+          "description": "Зурвасын төлөв",
+          "enum": ["new", "read", "archived"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Илгээсэн серверийн цаг"
+        }
+      },
+      "required": [
+        "senderUid",
+        "senderName",
+        "senderEmail",
+        "message",
+        "status",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Хэрэглэгчийн хувийн тохиргоо болон профайл (зөвхөн эзэмшигчид нээлттэй)"
+    },
+    "/scores/{scoreId}": {
+      "schema": {
+        "$ref": "#/entities/GameScore"
+      },
+      "description": "Anime Guess тоглоомын тэргүүлэгчдийн самбар болон хувийн оноонууд"
+    },
+    "/messages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/ContactMessage"
+      },
+      "description": "Портфолиогийн холбоо барих хэсгээс илгээсэн зурвасууд (илгээгч болон админ уншина)"
+    }
+  }
+}

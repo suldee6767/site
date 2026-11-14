@@ -1,0 +1,162 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net (Default-Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Global Hardened Primitives ---
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && isEmailVerified() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && isEmailVerified() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'suldee.TA@gmail.com'
+      );
+    }
+
+    function isAdminListSafe() {
+      return isSignedIn() && isEmailVerified() && request.auth.token.email == 'suldee.TA@gmail.com';
+    }
+
+    // --- Validation Blueprints ---
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'displayName', 'netlifySubdomain', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'netlifySubdomain', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid.size() >= 1 && data.uid.size() <= 128 && data.uid.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 80
+        && data.netlifySubdomain is string && data.netlifySubdomain.size() >= 1 && data.netlifySubdomain.size() <= 100
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidGameScore(data) {
+      return data.keys().hasAll(['userId', 'playerName', 'mode', 'difficulty', 'score', 'correctCount', 'totalQuestions', 'peakSpeed', 'isPublic', 'createdAt'])
+        && data.keys().hasOnly(['userId', 'playerName', 'mode', 'difficulty', 'score', 'correctCount', 'totalQuestions', 'peakSpeed', 'isPublic', 'createdAt'])
+        && data.userId is string && data.userId.size() >= 1 && data.userId.size() <= 128 && data.userId.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.playerName is string && data.playerName.size() >= 1 && data.playerName.size() <= 80
+        && data.mode is string && data.mode.size() >= 4 && data.mode.size() <= 20 && data.mode in ['emoji', 'anime', 'character']
+        && data.difficulty is string && data.difficulty.size() >= 3 && data.difficulty.size() <= 20 && data.difficulty in ['normal', 'hard', 'god']
+        && data.score is int && data.score >= 0 && data.score <= 1000
+        && data.totalQuestions is int && data.totalQuestions >= 1 && data.totalQuestions <= 100
+        && data.correctCount is int && data.correctCount >= 0 && data.correctCount <= data.totalQuestions
+        && data.peakSpeed is number && data.peakSpeed >= 1 && data.peakSpeed <= 5
+        && data.isPublic is bool
+        && data.createdAt is timestamp;
+    }
+
+    function isValidContactMessage(data) {
+      return data.keys().hasAll(['senderUid', 'senderName', 'senderEmail', 'message', 'status', 'createdAt'])
+        && data.keys().hasOnly(['senderUid', 'senderName', 'senderEmail', 'message', 'status', 'createdAt'])
+        && data.senderUid is string && data.senderUid.size() >= 1 && data.senderUid.size() <= 128 && data.senderUid.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.senderName is string && data.senderName.size() >= 1 && data.senderName.size() <= 100
+        && data.senderEmail is string && data.senderEmail.size() >= 3 && data.senderEmail.size() <= 160
+        && data.message is string && data.message.size() >= 1 && data.message.size() <= 2000
+        && data.status is string && data.status.size() >= 3 && data.status.size() <= 20 && data.status in ['new', 'read', 'archived']
+        && data.createdAt is timestamp;
+    }
+
+    // --- Collection: /admins/{userId} ---
+    match /admins/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list, create, update, delete: if false;
+    }
+
+    // --- Collection: /users/{userId} ---
+    match /users/{userId} {
+      allow get: if isValidId(userId) && isOwner(userId);
+      allow list: if false;
+      allow create: if isValidId(userId)
+        && isOwner(userId)
+        && isValidUserProfile(incoming())
+        && incoming().uid == request.auth.uid
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isOwner(userId)
+        && isValidUserProfile(incoming())
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'netlifySubdomain', 'updatedAt']);
+      allow delete: if isValidId(userId) && isOwner(userId);
+    }
+
+    // --- Collection: /scores/{scoreId} ---
+    match /scores/{scoreId} {
+      allow get: if isValidId(scoreId)
+        && (existing().isPublic == true || (isSignedIn() && isEmailVerified() && existing().userId == request.auth.uid) || isAdmin());
+      allow list: if existing().isPublic == true
+        || (isSignedIn() && isEmailVerified() && existing().userId == request.auth.uid)
+        || isAdminListSafe();
+      allow create: if isSignedIn()
+        && isEmailVerified()
+        && isValidId(scoreId)
+        && isValidGameScore(incoming())
+        && incoming().userId == request.auth.uid
+        && incoming().createdAt == request.time;
+      allow update: if false;
+      allow delete: if isSignedIn()
+        && isEmailVerified()
+        && isValidId(scoreId)
+        && (existing().userId == request.auth.uid || isAdmin());
+    }
+
+    // --- Collection: /messages/{messageId} ---
+    match /messages/{messageId} {
+      allow get: if isSignedIn()
+        && isEmailVerified()
+        && isValidId(messageId)
+        && (existing().senderUid == request.auth.uid || isAdmin());
+      allow list: if isSignedIn()
+        && isEmailVerified()
+        && (existing().senderUid == request.auth.uid || isAdminListSafe());
+      allow create: if isSignedIn()
+        && isEmailVerified()
+        && isValidId(messageId)
+        && isValidContactMessage(incoming())
+        && incoming().senderUid == request.auth.uid
+        && incoming().status == 'new'
+        && incoming().createdAt == request.time;
+      allow update: if isSignedIn()
+        && isEmailVerified()
+        && isValidId(messageId)
+        && isValidContactMessage(incoming())
+        && isAdmin()
+        && existing().status != 'archived'
+        && incoming().senderUid == existing().senderUid
+        && incoming().senderName == existing().senderName
+        && incoming().senderEmail == existing().senderEmail
+        && incoming().message == existing().message
+        && incoming().createdAt == existing().createdAt
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status']);
+      allow delete: if isSignedIn()
+        && isEmailVerified()
+        && isValidId(messageId)
+        && isAdmin();
+    }
+  }
+}

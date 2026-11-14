@@ -1,13 +1,9 @@
 import { ProjectItem } from '../types.ts';
+import { resolveAssetImage } from './imageAssets.ts';
 
 /**
  * Бүтээлүүдийн үндсэн жагсаалт (Array)
- * Нийт 5 төсөл:
- * 1. Шинэ бүтээлч вэб төсөл — https://inquisitive-griffin-2bf5da.netlify.app
- * 2. Мөрөөдлийн ажил — https://[НЕТЛИФАЙ].netlify.app/dream-job.html
- * 3. Миний YouTube — https://[НЕТЛИФАЙ].netlify.app/my-youtube.html
- * 4. Тоглоомын сайт — https://[НЕТЛИФАЙ].netlify.app/tusul.html
- * 5. Малаа хашаандаа — https://[НЕТЛИФАЙ].netlify.app/togloom.html
+ * Вэб сайтууд (projectType: 'website') ба Тоглоомууд (projectType: 'game') гэж ангилав.
  */
 export const PROJECTS_LIST: ProjectItem[] = [
   {
@@ -15,9 +11,10 @@ export const PROJECTS_LIST: ProjectItem[] = [
     title: 'Шинэ бүтээлч вэб төсөл',
     path: '',
     customFullUrl: 'https://inquisitive-griffin-2bf5da.netlify.app',
-    imageUrl: '/src/assets/images/project_creative_web_1794108003612.jpg',
+    imageUrl: resolveAssetImage('/src/assets/images/project_creative_web_1794108003612.jpg'),
     description: 'Орчин үеийн загварлаг интерфэйс, бүтээлч шийдэл бүхий шинээр нийтлэгдсэн Netlify вэб төсөл.',
     longDescription: 'Энэхүү төсөл нь орчин үеийн вэб технологи, интерактив өнгө төрх болон шинэлэг бүтэцтэйгээр бүтээгдсэн бөгөөд Netlify дээр шууд байршин ажиллаж буй шинэ бүтээл юм.',
+    projectType: 'website',
     category: 'creative',
     categoryLabel: 'Вэб төсөл & Дизайн',
     tag: 'Шинэ бүтээл',
@@ -35,9 +32,10 @@ export const PROJECTS_LIST: ProjectItem[] = [
     id: 'dream-job',
     title: 'Мөрөөдлийн ажил',
     path: 'dream-job.html',
-    imageUrl: '/src/assets/images/project_dream_job_1794108005400.jpg',
+    imageUrl: resolveAssetImage('/src/assets/images/project_dream_job_1794108005400.jpg'),
     description: 'Ирээдүйн мэргэжил, зорилго болон ур чадварын хөгжлийн замын зураглалыг харуулсан интерактив хуудас.',
     longDescription: 'Энэхүү төсөл нь миний ирээдүйд хүрэхээр зорьж буй мөрөөдлийн ажил, мэргэжлийн чиг баримжаа, эзэмших шаардлагатай чадварууд болон хувийн зорилтуудыг эмх цэгцтэй, ойлгомжтойгоор танилцуулсан бүтээл юм.',
+    projectType: 'website',
     category: 'career',
     categoryLabel: 'Карьер & Зорилго',
     tag: 'Интерактив танилцуулга',
@@ -55,9 +53,10 @@ export const PROJECTS_LIST: ProjectItem[] = [
     id: 'my-youtube',
     title: 'Миний YouTube',
     path: 'my-youtube.html',
-    imageUrl: '/src/assets/images/project_youtube_creator_1794108004774.jpg',
+    imageUrl: resolveAssetImage('/src/assets/images/project_youtube_creator_1794108004774.jpg'),
     description: 'Бүтээлч видео бичлэгүүд, сонирхолтой контент болон YouTube сувгийн холбоосуудыг төвлөрүүлсэн вэб хуудас.',
     longDescription: 'Миний YouTube сувгийн шилдэг бичлэгүүд, танин мэдэхүйн болон бүтээлч контентуудыг нэг дороос үзэх боломжтой хуудас. Видео бүтээх сонирхлоо веб технологитой хослуулан хөгжүүлсэн төсөл.',
+    projectType: 'website',
     category: 'media',
     categoryLabel: 'Видео & Контент',
     tag: 'Медиа төв',
@@ -75,9 +74,10 @@ export const PROJECTS_LIST: ProjectItem[] = [
     id: 'game-site',
     title: 'Тоглоомын сайт',
     path: 'tusul.html',
-    imageUrl: '/src/assets/images/project_web_games_1794108005222.jpg',
+    imageUrl: resolveAssetImage('/src/assets/images/project_web_games_1794108005222.jpg'),
     description: 'Веб технологи дээр суурилсан хөгжилтэй мини тоглоомууд, интерактив веб туршилтуудыг агуулсан төслийн хуудас.',
     longDescription: 'Веб орчинд ажилладаг бүтээлч төслүүд болон сонирхолтой мини тоглоомуудыг багтаасан төв сайт. Хэрэглэгчийн оролцоог хангасан интерактив шийдлүүдийг туршин бүтээсэн юм.',
+    projectType: 'game',
     category: 'games',
     categoryLabel: 'Тоглоом & Төсөл',
     tag: 'Мини тоглоомууд',
@@ -95,9 +95,10 @@ export const PROJECTS_LIST: ProjectItem[] = [
     id: 'pasture-game',
     title: 'Малаа хашаандаа',
     path: 'togloom.html',
-    imageUrl: '/src/assets/images/project_pasture_game_1794108005198.jpg',
+    imageUrl: resolveAssetImage('/src/assets/images/project_pasture_game_1794108005198.jpg'),
     description: 'Монгол уламжлалт мал аж ахуйн сэдэвтэй, логик сэтгэлгээ ба авхаалж самбаа шаардсан сонирхолтой тоглоом.',
     longDescription: 'Монгол соёл, ахуйн өвөрмөц онцлогийг тусгасан "Малаа хашаандаа" веб тоглоом. Малаа зөв хашаанд нь оруулах логик даалгавар, түвшин ахих систем бүхий зугаатай веб тоглоом юм.',
+    projectType: 'game',
     category: 'games',
     categoryLabel: 'Монгол тоглоом',
     tag: 'Логик & Соёл',
